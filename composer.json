@@ -14,10 +14,18 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.6",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "xj/yii2-jquery-mobile-widget": "*",
+        "yiisoft/yii2-jui": "~2.0.0",
+        "yiisoft/yii2-authclient": "^2.1",
+        "dektrium/yii2-user" : "^0.9.12",
+        "codeception/base": "^2.2.3",
+        "codeception/verify": "*",
+        "codeception/specify": "~0.4.3",
+        "johnitvn/yii2-rbac-plus": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
