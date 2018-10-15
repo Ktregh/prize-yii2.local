@@ -36,27 +36,32 @@ jQuery(document).ready(function($)
         changeImg();        
         setTimeout(function ()
         {
-            //getPrize();
-        }, 3000);
+                getPrize();
+        }, 3);
         function getPrize()
         {
             $.ajax
             ({
-                url: '/controllers/AjaxController.php',
+                url: '/site/prizes',
                 type: 'POST',
-                dataType: 'json',
                 data:
                 {
                     firststep:'yes'
+                },
+                success: function(data)
+                {
+                    console.log(data);
+                    type = data.type;
+                    prize = data.prize;
+                    result = data.result;
+                    bonus = data.bonus;
+                    getPrize2();
+                },
+                error: function()
+                {
+                    alert('Что-то пошло не так!');
                 }
-             }).done(function(data)
-             {
-                type = data.type;
-                prize = data.prize;
-                result = data.result;
-                bonus = data.bonus;
-                getPrize2();
-           });
+            });
         }
         function getPrize2()
         {
@@ -87,21 +92,22 @@ jQuery(document).ready(function($)
     {
         $.ajax
         ({
-            url: '/controllers/AjaxController.php',
+            url: '/site/change-money',
             type: 'POST',
-            dataType: 'json',
-            data:
+            success: function(data)
             {
-                changemoney:'yes'
+                var result = data.result;
+                var bonus = data.bonus;
+                alert(data.prize);
+                $('#bonus').html(bonus);
+                $('#textp').html(result + '. У Вас на счету ' + bonus + ' баллов!');
+                $('#mainbutton').css({'display' : 'block'});
+                $('#moneydiv').remove();
+            },
+            error: function()
+            {
+                alert('Что-то пошло не так!');
             }
-         }).done(function(data)
-         {
-            var result = data.result;
-            var bonus = data.bonus;
-            $('#bonus').html(bonus);
-            $('#textp').html(result + '. У Вас на счету ' + bonus + ' баллов!');
-            $('#mainbutton').css({'display' : 'block'});
-            $('#moneydiv').remove();
         });
     });
     $('#getmoney').click(function()
