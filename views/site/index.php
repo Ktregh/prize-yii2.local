@@ -1,53 +1,38 @@
 <?php
 
-/* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+    $this->title = 'Сайт с призами';
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+<div class="indexdiv">
+    <?php
+        if(\Yii::$app->user->isGuest)
+        {?>
+            <p>В розыгрыше могут принимать участие только зарегистрированные пользователи.
+                <a href="<?=Yii::$app->urlManager->createUrl(['/user/login']);?>">Войдите</a> или <a href="<?=Yii::$app->urlManager->createUrl(['/user/register']);?>">зарегистрируйтесь</a>.</p>
+        <?php }
+        else {?>
+        <div class="startdiv">
+            <div class="divbutton" style="margin-top: 100px;" id="startbutton">
+                <a class="buttonstart" id="start">
+                    Испытать удачу!
+                </a>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div style="text-align: center; margin-top: 10px;">
+                <img style="width: 300px; height: 225px"  id="imgprize" alt="" src=""/>
+                <p id="textp" style="font-size: 20px;"></p>
+                <div id="moneydiv" style="display: none;">
+                    <button id="getmoney">Получить на счёт</button>
+                    <button id="changemoney">Поменять на балы (1 к 2)</button>
+                </div>
+                <div id="prizediv" style="display: none;">
+                    <button id="getthing">Получить приз</button>
+                    <button id="refusething">Отказаться от приза</button>
+                </div>
             </div>
         </div>
-
-    </div>
+         <div class="divbutton" style="display: none; margin-top: 50px;" id="mainbutton">
+            <a class="buttonstart" href="/">
+                На главную
+            </a>
+        </div>    
+    <?php } ?>
 </div>

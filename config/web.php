@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -15,14 +16,13 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'xBZMZmmSbXpSPwpufhXdVBMphOtbL1Fl',
+            'baseUrl' => '',
         ],
+        
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
+        
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -42,15 +42,50 @@ $config = [
                 ],
             ],
         ],
+        'authClientCollection' => [
+            'class'   => \yii\authclient\Collection::className(),
+                'clients' => [
+          
+                    
+                ]
+        ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<controller>/<action>' => '<controller>/<action>'
             ],
         ],
-        */
+    ],
+    'modules' => [
+         'gridview' => [ 'class' => '\kartik\grid\Module'],
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableConfirmation' => false,
+            'enableUnconfirmedLogin' => true,
+            //'enableGeneratingPassword' => false,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['admin'],
+            'controllerMap' => [
+                'registration' => [
+                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_REGISTER => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    }
+                    ],
+                'migrate' => [
+                'class' => \yii\console\controllers\MigrateController::class,
+                'migrationPath' => [
+                    '@vendor/lav45/yii2-activity-logger/migrations',
+                    ],
+                ],
+            ],
+                         
+        ],
     ],
     'params' => $params,
 ];
